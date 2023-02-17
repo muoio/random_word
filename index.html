@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Fetch example</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f7f7f7;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      border-radius: 4px;
+    }
+
+    h1 {
+      font-size: 36px;
+      font-weight: 700;
+      margin-top: 0;
+    }
+
+    p {
+      font-size: 18px;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Từ ngẫu nhiên</h1>
+    <button id="get_new_word">Từ mới</button>
+    <p id="text-container"> LOADING ... </p>
+  </div>
+
+  <script>
+    let lines = [];
+    function get_random_number(a, b){
+        return Math.floor(Math.random() * (b - a + 1)) + a;
+    }
+    function display(info){
+        let info_ = info.split('\t');
+        let word = info_[0];
+        let translate = info_[1];
+        console.log(translate);
+        translate = translate.replace('\\n','78787');
+        translate = translate.replace('\n','1212');
+
+        console.log(translate);
+        document.getElementById('text-container').innerHTML = translate;
+    }
+    get_new_word.onclick = function(){
+        let n = lines.length;
+        let rand_num = get_random_number(0,n-1);
+        let rand_word = lines[rand_num];
+        display(rand_word);
+    }
+    fetch('https://raw.githubusercontent.com/muoio/random_word/common-english-viet-words.txt')
+      .then(response => response.text())
+      .then(data => {
+        lines = data.split("\n");
+        let n = lines.length;
+        let rand_num = get_random_number(0,n-1);
+        document.getElementById('text-container').innerHTML = lines[rand_num];
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  </script>
+</body>
+</html>
