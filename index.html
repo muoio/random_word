@@ -62,7 +62,7 @@
         let rand_word = lines[rand_num];
         display(rand_word);
     }
-    fetch('https://raw.githubusercontent.com/muoio/random_word/common-english-viet-words.txt')
+    fetch('https://raw.githubusercontent.com/muoio/random_word/main/common-english-viet-words.txt')
       .then(response => response.text())
       .then(data => {
         lines = data.split("\n");
