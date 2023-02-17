@@ -35,7 +35,7 @@
 </head>
 <body>
   <div class="container">
-    <h1>Từ ngẫu nhiên</h1>
+    <h1 id="new_word">Từ ngẫu nhiên</h1>
     <button id="get_new_word">Từ mới</button>
     <p id="text-container"> LOADING ... </p>
   </div>
@@ -49,10 +49,16 @@
         let info_ = info.split('\t');
         let word = info_[0];
         let translate = info_[1];
-        console.log(translate);
-        translate = translate.replace('\\n','78787');
-        translate = translate.replace('\n','1212');
+        console.log(info_);
+        translate = translate.replaceAll('\\n\*','<br>');
+        translate = translate.replaceAll('\\n\-','<br>');
+        translate = translate.replaceAll('\\n','<br>');
+        translate = translate.replaceAll('\\n@','<br>');
+        translate = translate.replaceAll('\\n=','<br>');
 
+
+
+        document.getElementById('new_word').innerHTML = word;
         console.log(translate);
         document.getElementById('text-container').innerHTML = translate;
     }
@@ -68,7 +74,7 @@
         lines = data.split("\n");
         let n = lines.length;
         let rand_num = get_random_number(0,n-1);
-        document.getElementById('text-container').innerHTML = lines[rand_num];
+        display(lines[rand_num]);
       })
       .catch(error => {
         console.error('Error:', error);
